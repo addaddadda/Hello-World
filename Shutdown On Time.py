@@ -1,6 +1,6 @@
 import subprocess
-from sys import platform
+import time
 
 if __name__ == '__main__':
-    if platform.system() == 'Windows':
+    if time.localtime().tm_hour == 13:
         subprocess.run(["shutdown", "-p"])
