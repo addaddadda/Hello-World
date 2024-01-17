@@ -13,8 +13,21 @@ def startup(file_path=""):
         bat_file.write(r'start "" "%s"' % file_path)
 
 
-if __name__ == '__main__':
-    startup()
+def shutdown(shutdown_time=-1):
+    if shutdown_time == -1:
+        subprocess.run(["shutdown", "-s"])
+    else:
+        subprocess.run(["shutdown", "-s", "-t", str(time)])
+
+
+def kill_process(process_name):
+    if process_name in os.popen('tasklist').read():
+        os.system("taskkill /im "+process_name)
+    else:
+        print("The process is not running")
+
+
+def main():
     while True:
         try:
             current_hour = time.localtime().tm_hour
