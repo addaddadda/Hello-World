@@ -2,6 +2,9 @@ import subprocess
 import time
 import getpass
 import os
+from win11toast import toast
+
+toast('Hello Python', duration='long')
 
 USER_NAME: str = getpass.getuser()
 
@@ -21,17 +24,20 @@ def shutdown(shutdown_time=-1):
         subprocess.run(["shutdown", "-s", "-t", str(time)])
 
 
+def kill_process(process_name):
+    if process_name in os.popen('tasklist').read():
+        os.system("taskkill /im " + process_name)
+    else:
+        print("The process is not running")
+
+
 def timer(second=7200):
     t = time.time()
     while time.time() - t < second:
         time.sleep(60)
 
 
-def kill_process(process_name):
-    if process_name in os.popen('tasklist').read():
-        os.system("taskkill /im " + process_name)
-    else:
-        print("The process is not running")
+#def notificator(title, message):
 
 
 def main():
