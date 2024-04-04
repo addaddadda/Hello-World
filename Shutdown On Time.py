@@ -2,9 +2,7 @@ import subprocess
 import time
 import getpass
 import os
-from win11toast import toast
-
-toast('Hello Python', duration='long')
+from plyer import notification
 
 USER_NAME: str = getpass.getuser()
 
@@ -24,11 +22,14 @@ def shutdown(shutdown_time=-1):
         subprocess.run(["shutdown", "-s", "-t", str(time)])
 
 
-def kill_process(process_name):
+def find_and_kill_process(process_name):
     if process_name in os.popen('tasklist').read():
+        notification.notify("Find mc running now", "Close mc 20 minutes later")
+        time.sleep(20*60)
         os.system("taskkill /im " + process_name)
     else:
-        print("The process is not running")
+        time.sleep(5)
+        print("Can't find mc running now")
 
 
 def timer(second=7200):
@@ -37,7 +38,7 @@ def timer(second=7200):
         time.sleep(60)
 
 
-#def notificator(title, message):
+# def notificator(title, message):
 
 
 def main():
@@ -49,3 +50,25 @@ def main():
                 time.sleep(60)
         except Exception as e:
             print(f"An error occurred: {e}")
+
+
+def notifier(title, message="""It's been 20 minutes
+Take a break
+Take care of your eyes
+            """):
+    notification.notify(
+        title=title,
+        message=message,
+        app_icon=r"C:\Users\Chen Xiaoheng\test\test\minecraft.ico",
+        timeout=10
+    )
+
+
+if __name__ == "__main__":
+    notifier("MC Shutdown On", "It is running and may add it to the startup folder to run automatically")
+    startup()
+    while True:
+        find_and_kill_process("Minecraft")
+
+
+
